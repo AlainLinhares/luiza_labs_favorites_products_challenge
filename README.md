@@ -119,7 +119,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJ1c2VybmFtZSI6ImFsYWluIn0
 (autenticados — adicione header `Authorization: Bearer <token>`)
 
 ### Clientes
-- `POST /clients` — cria cliente `{ name, email, password }`
+- `POST /clients` — cria cliente `{ name, email }`
 - `GET /clients/:id` — recupera cliente
 - `PUT /clients/:id` — atualiza cliente
 - `DELETE /clients/:id` — remove cliente
