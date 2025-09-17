@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as https from 'https';
 import * as path from 'path';
 import * as fs from 'fs';
+import { BadGatewayException } from '@nestjs/common';
 
 @Injectable()
 export class ProductsService {
@@ -11,7 +12,12 @@ export class ProductsService {
   private circuitOpenUntil = 0;
   private logger = new Logger(ProductsService.name);
 
-  private httpsAgent = new https.Agent({ rejectUnauthorized: false });
+  private readonly httpsAgent = new https.Agent({ rejectUnauthorized: false });
+  private readonly MAX_FAILURES = 3;
+  private readonly CIRCUIT_TIMEOUT = 30_000;
+  private readonly CACHE_TTL = 60_000;
+
+  private useMockOnFailure = true;
 
   private mockProducts: Array<{
     id: string;
@@ -31,8 +37,7 @@ export class ProductsService {
     try {
       const rawData = fs.readFileSync(mockPath, 'utf-8');
       this.logger.log(`Mock products loaded from ${mockPath}`);
-      const parsed = JSON.parse(rawData);
-      return parsed;
+      return JSON.parse(rawData);
     } catch (err) {
       this.logger.error(`Failed to load mock products from ${mockPath}`, err);
       return [];
@@ -45,20 +50,20 @@ export class ProductsService {
 
   private recordFailure() {
     this.failures += 1;
-    if (this.failures >= 3) {
-      this.circuitOpenUntil = Date.now() + 30_000;
-      this.logger.warn('ProductsService circuit opened due to repeated failures');
+    if (this.failures >= this.MAX_FAILURES) {
+      this.circuitOpenUntil = Date.now() + this.CIRCUIT_TIMEOUT;
+      this.logger.warn('Circuit opened due to repeated failures');
     }
   }
 
   private recordSuccess() {
     this.failures = 0;
+    this.circuitOpenUntil = 0;
   }
 
   private getFromCache(key: string): any | null {
     const entry = this.cache.get(key);
-    if (!entry) return null;
-    if (Date.now() > entry.expiresAt) {
+    if (!entry || Date.now() > entry.expiresAt) {
       this.cache.delete(key);
       return null;
     }
@@ -66,13 +71,27 @@ export class ProductsService {
   }
 
   private setCache(key: string, data: any) {
-    this.cache.set(key, { data, expiresAt: Date.now() + 60_000 });
+    this.cache.set(key, { data, expiresAt: Date.now() + this.CACHE_TTL });
+  }
+
+  public setMockMode(enabled: boolean) {
+    this.useMockOnFailure = enabled;
+  }
+
+  public resetState() {
+    this.cache.clear();
+    this.failures = 0;
+    this.circuitOpenUntil = 0;
   }
 
   async findById(productId: string): Promise<any | null> {
     if (this.isCircuitOpen()) {
-      this.logger.warn(`Circuit open, returning mock product for id ${productId}`);
-      return this.mockProducts.find(p => p.id === productId) || null;
+      this.logger.warn(`Circuit open, access denied for id ${productId}`);
+      if (this.useMockOnFailure) {
+        return this.mockProducts.find(p => p.id === productId) || null;
+      } else {
+        throw new BadGatewayException('Product API temporarily unavailable');
+      }
     }
 
     const cacheKey = `product:${productId}`;
@@ -99,15 +118,23 @@ export class ProductsService {
     } catch (e) {
       this.recordFailure();
       this.logger.debug(e instanceof Error ? e.message : 'Unknown error');
-      this.logger.warn(`Using mock product for id ${productId} due to API failure`);
-      return this.mockProducts.find(p => p.id === productId) || null;
+      if (this.useMockOnFailure) {
+        this.logger.warn(`Using mock product for id ${productId} due to API failure`);
+        return this.mockProducts.find(p => p.id === productId) || null;
+      } else {
+        throw new BadGatewayException('Failed to fetch product');
+      }
     }
   }
 
   async listByPage(page: number = 1): Promise<any[]> {
     if (this.isCircuitOpen()) {
-      this.logger.warn(`Circuit open, returning mock product list for page ${page}`);
-      return this.mockProducts;
+      this.logger.warn(`Circuit open, access denied for page ${page}`);
+      if (this.useMockOnFailure) {
+        return this.mockProducts;
+      } else {
+        throw new BadGatewayException('Product API temporarily unavailable');
+      }
     }
 
     const cacheKey = `page:${page}`;
@@ -133,8 +160,12 @@ export class ProductsService {
     } catch (e) {
       this.recordFailure();
       this.logger.debug(e instanceof Error ? e.message : 'Unknown error');
-      this.logger.warn(`Using mock product list for page ${page} due to API failure`);
-      return this.mockProducts;
+      if (this.useMockOnFailure) {
+        this.logger.warn(`Using mock product list for page ${page} due to API failure`);
+        return this.mockProducts;
+      } else {
+        throw new BadGatewayException('Failed to fetch product list');
+      }
     }
   }
 }
