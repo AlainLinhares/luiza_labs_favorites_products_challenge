@@ -157,4 +157,11 @@ npm run test:cov
 - `src/mocks` — mock-products.json / mock-favorites.json
 - `test/` — unit + integration
 
+
+# Documentação da API Rest
+
+A documentação completa da API pode ser acessada no Postman pelo link abaixo:
+
+[Documentação da API Rest — Postman](https://www.postman.com/martian-desert-931750/workspace/magalu-challenge/collection/8694952-907e3202-ce3b-44ce-bfff-27e88aefe1b2?action=share&creator=8694952&active-environment=8694952-aecd19ac-2079-4804-a97a-d2e6c7655f59)
+
 ---
