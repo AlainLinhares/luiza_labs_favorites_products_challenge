@@ -16,13 +16,4 @@ export class UpdateClientDto {
   @IsOptional()
   @IsEmail()
   email?: string;
-
-  @ApiPropertyOptional({
-    description: 'New password (min 6 characters)',
-    example: 'newSecurePassword456',
-    minLength: 6
-  })
-  @IsOptional()
-  @MinLength(6)
-  password?: string;
 }

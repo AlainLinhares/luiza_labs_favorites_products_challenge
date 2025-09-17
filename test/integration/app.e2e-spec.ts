@@ -33,13 +33,13 @@ describe('App E2E', () => {
   });
 
   it('creates a client', async () => {
-    const res = await request(app.getHttpServer()).post('/clients').send({ name: 'A', email: 'a@b.com', password: 'secret' });
+    const res = await request(app.getHttpServer()).post('/clients').send({ name: 'A', email: 'a@b.com' });
     expect(res.status).toBe(201);
     clientId = res.body.id;
   });
 
   it('fails creating duplicate client', async () => {
-    const res = await request(app.getHttpServer()).post('/clients').send({ name: 'A', email: 'a@b.com', password: 'secret' });
+    const res = await request(app.getHttpServer()).post('/clients').send({ name: 'A', email: 'a@b.com' });
     expect(res.status).toBe(400);
   });
 

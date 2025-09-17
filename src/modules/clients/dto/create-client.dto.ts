@@ -15,13 +15,4 @@ export class CreateClientDto {
   })
   @IsEmail()
   email!: string;
-
-  @ApiProperty({
-    description: 'Password for the client account (min 6 characters)',
-    example: 'securePassword123',
-    minLength: 6
-  })
-  @IsNotEmpty()
-  @MinLength(6)
-  password!: string;
 }
