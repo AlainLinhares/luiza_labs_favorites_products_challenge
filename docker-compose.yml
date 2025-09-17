@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    extends:
+      file: docker-compose.base.yml
+      service: db
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - .env.docker
+    entrypoint: >
+      sh -c "npx prisma migrate deploy && node dist/src/main.js"
+
+volumes:
+  db_data:
