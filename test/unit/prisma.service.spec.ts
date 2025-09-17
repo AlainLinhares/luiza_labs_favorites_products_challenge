@@ -9,12 +9,12 @@ describe('PrismaService', () => {
     service.$disconnect = jest.fn();
   });
 
-  it('connects onModuleInit', async () => {
+  it('onModuleInit', async () => {
     await service.onModuleInit();
     expect(service.$connect).toHaveBeenCalled();
   });
 
-  it('disconnects onModuleDestroy', async () => {
+  it('onModuleDestroy', async () => {
     await service.onModuleDestroy();
     expect(service.$disconnect).toHaveBeenCalled();
   });

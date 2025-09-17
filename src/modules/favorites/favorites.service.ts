@@ -19,8 +19,8 @@ export class FavoritesService {
   constructor(private prisma: PrismaService, private productsService: ProductsService) {
     const filePath = path.resolve(__dirname, '../../../src/mocks/mock-favorites.json');
     try {
-      const rawData = fs.readFileSync(filePath, 'utf-8');
-      this.mockFavorites = JSON.parse(rawData).map((f: any) => ({
+      const fileContent = fs.readFileSync(filePath, 'utf-8');
+      this.mockFavorites = JSON.parse(fileContent).map((f: any) => ({
         ...f,
         createdAt: new Date(f.createdAt),
       }));
@@ -61,7 +61,7 @@ export class FavoritesService {
         ? dbFavorites
         : this.mockFavorites.filter(f => f.clientId === clientId);
 
-      const enriched = await Promise.all(
+      const favoriteProducts = await Promise.all(
         sourceFavorites.map(async (f: Favorite) => {
           const product = await this.productsService.findById(f.productId).catch(() => null);
           return {
@@ -77,7 +77,7 @@ export class FavoritesService {
         })
       );
 
-      return enriched;
+      return favoriteProducts;
     } catch (error) {
       this.logger.error('Error listing favorites:', error);
       return [];
