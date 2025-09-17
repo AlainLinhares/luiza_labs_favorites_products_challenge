@@ -21,19 +21,18 @@ Implementado em **NestJS + TypeScript** com **Prisma (Postgres)**, proteção vi
 
 ## Requisitos cobertos
 Este repositório implementa:
-- CRUD de **Clientes** (nome + email, email único).
-- **Lista de favoritos por cliente**, sem duplicatas do mesmo produto.
+- CRUD de **Clientes** (nome e email, considerando email único).
+- **Lista de favoritos por cliente**, sem duplicidade do mesmo produto.
 - Validação de existência do produto antes de adicionar aos favoritos (consulta à API externa com fallback para mocks).
-- Resposta dos favoritos enriquecida com título, imagem, preço e review (quando disponível).
-- Autenticação/Autorização por **JWT** (guard aplicados nas rotas).
+- Autenticação/Autorização por **JWT**
 - Testes unitários e de integração.
 - Configuração para Docker + docker-compose.
 
 ---
 
 ## Pré-requisitos locais
-- Node.js >= 18
-- npm (compatível com Node)
+- Node.js
+- npm
 - Docker (se pretende rodar via container)
 - PostgreSQL se rodar sem Docker (ou usar um container com Postgres)
 - `npx prisma` para executar migrations/generate (se necessário)
@@ -83,7 +82,7 @@ npm run start:dev
 docker compose -f docker-compose-base.yml -f docker-compose-dev.yml up -d
 ```
 
-Se preferir usar apenas `docker-compose-dev.yml`:
+Se preferir usar apenas `docker-compose-dev.yml` (no caso de querer subir apenas a instância do Postgres e rodar localmente via npm run):
 ```bash
 docker compose -f docker-compose-dev.yml up
 ```
@@ -148,7 +147,7 @@ npm run test:cov
 
 ---
 
-## Estrutura do projeto (resumida)
+## Estrutura do projeto
 - `src/modules/clients` — controllers, services, DTOs (CRUD clientes)
 - `src/modules/favorites` — controllers, services, DTOs (gerenciamento de favoritos)
 - `src/modules/products` — serviço para consultar API de produtos + fallback/mocks + cache
@@ -156,6 +155,7 @@ npm run test:cov
 - `src/auth` — JwtStrategy + guard
 - `src/mocks` — mock-products.json / mock-favorites.json
 - `test/` — unit + integration
+- `collection/` — com a collection dos enpoints e também a collection para os environments que devem ser preenchidos. Para o caso dos environments usar como referência os valores deste [link](https://www.postman.com/martian-desert-931750/magalu-challenge/environment/8694952-aecd19ac-2079-4804-a97a-d2e6c7655f59)
 
 
 # Documentação da API Rest
