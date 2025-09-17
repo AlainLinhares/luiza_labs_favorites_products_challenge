@@ -1,0 +1,17 @@
+[
+  {
+    "clientId": "cmfo3nuc10000nrcgn1rxfvvh",
+    "productId": "1",
+    "createdAt": "2024-01-01T12:00:00Z"
+  },
+  {
+    "clientId": "cmfo3nuc10000nrcgn1rxfvvh",
+    "productId": "3",
+    "createdAt": "2024-01-02T14:00:00Z"
+  },
+  {
+    "clientId": "client2",
+    "productId": "2",
+    "createdAt": "2024-01-03T09:00:00Z"
+  }
+]

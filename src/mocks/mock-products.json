@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1",
+    "title": "Apple iPhone 14 Pro",
+    "price": 6999,
+    "image": "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-family-select?wid=470&hei=556&fmt=png-alpha&.v=1660753619946",
+    "brand": "Apple",
+    "reviewScore": 4.8
+  },
+  {
+    "id": "2",
+    "title": "Samsung Galaxy S23 Ultra",
+    "price": 6499,
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/br/galaxy-s23/gallery/br-galaxy-s23-ultra-5g-s918-sm-s918bzvgzto-530158110?$650_519_PNG$",
+    "brand": "Samsung",
+    "reviewScore": 4.7
+  },
+  {
+    "id": "3",
+    "title": "Sony WH-1000XM4 Headphones",
+    "price": 1299,
+    "image": "https://cdn.sony-asia.com/image/5e63d1a874169e1b23064efcae6dbcf6?fmt=png-alpha&wid=300",
+    "brand": "Sony",
+    "reviewScore": 4.6
+  },
+  {
+    "id": "4",
+    "title": "Logitech MX Master 3 Mouse",
+    "price": 699,
+    "image": "https://resource.logitech.com/content/dam/logitech/en/products/mice/mx-master-3/gallery/mx-master-3-top-view.png",
+    "brand": "Logitech",
+    "reviewScore": 4.5
+  },
+  {
+    "id": "5",
+    "title": "Dell XPS 13 Laptop",
+    "price": 7999,
+    "image": "https://i.dell.com/sites/csimages/Master_Imagery/all/xps-13-9305-laptop-open-front-view.png",
+    "brand": "Dell",
+    "reviewScore": 4.4
+  }
+]
