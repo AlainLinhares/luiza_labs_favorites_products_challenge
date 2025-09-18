@@ -76,7 +76,7 @@ describe('App E2E', () => {
     expect(res.status).toBe(200);
   });
 
-  it('remove non-existing favorite', async () => {
+  it('remove non existing favorite', async () => {
     const res = await request(app.getHttpServer()).delete(`/clients/${clientId}/favorites/999`);
     expect(res.status).toBe(404);
   });
