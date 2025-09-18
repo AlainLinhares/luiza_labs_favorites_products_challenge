@@ -182,8 +182,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJ1c2VybmFtZSI6ImFsYWluIn0
 ---
 
 ## Testes
-- Unitários: `npm run test:unit` (ou `npm test` que roda unit + e2e)
-- Integração / e2e: `npm run test:e2e`
+- Unitários: `npm run test:unit` (ou `npm test` que roda unit)
 
 Rode cobertura:
 ```bash
@@ -199,7 +198,7 @@ npm run test:cov
 - `src/prisma` — schema Prisma e client
 - `src/auth` — JwtStrategy + guard
 - `src/mocks` — mock-products.json / mock-favorites.json
-- `test/` — unit + integration
+- `test/` — unit
 - `collection/` — com a collection dos enpoints e também a collection para os environments que devem ser preenchidos. Para o caso dos environments usar como referência os valores deste [link](https://www.postman.com/martian-desert-931750/magalu-challenge/environment/8694952-aecd19ac-2079-4804-a97a-d2e6c7655f59)
 
 ---

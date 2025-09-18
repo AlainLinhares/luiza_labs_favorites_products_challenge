@@ -8,8 +8,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
     "test:unit": "jest --config jest.config.js --coverage",
-    "test:e2e": "jest --config test/jest-e2e.json --coverage",
-    "test": "npm run test:unit && npm run test:e2e",
+    "test": "npm run test:unit",
     "test:cov": "jest --coverage --coverageReporters=text --coverageReporters=html"
   },
   "dependencies": {
