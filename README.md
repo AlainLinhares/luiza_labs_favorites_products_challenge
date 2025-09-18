@@ -58,7 +58,7 @@ cp .env.example .env
 npm run prisma:generate
 ```
 
-4. (Opcional) Rode migrações:
+4. Execute as migrações:
 ```bash
 npm run prisma:migrate
 ```
