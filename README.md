@@ -11,6 +11,7 @@ Implementado em **NestJS + TypeScript** com **Prisma (Postgres)**, proteção vi
 - [Rodando localmente (modo dev)](#rodando-localmente-modo-dev)
 - [Rodando com Docker Compose](#rodando-com-docker-compose)
 - [Variáveis de ambiente](#variáveis-de-ambiente)
+- [Base de dados (sem seed automático)](#base-de-dados-sem-seed-automático)
 - [Geração de token JWT para testes](#geração-de-token-jwt-para-testes)
 - [Endpoints principais](#endpoints-principais)
 - [Arquivos de mock](#arquivos-de-mock)
@@ -87,6 +88,8 @@ Se preferir usar apenas `docker-compose-dev.yml` (no caso de querer subir apenas
 docker compose -f docker-compose-dev.yml up
 ```
 
+---
+
 ## Variáveis de ambiente
 Exemplos disponíveis em:
 - `.env.example`
@@ -101,6 +104,47 @@ JWT_SECRET=key_challenge_luiza_labs_favorites_products
 ```
 
 Se usar Docker Compose, o `DATABASE_URL` padrão em `.env.docker` aponta para `db:5432`.
+
+---
+
+## Base de dados (sem seed automático)
+
+Este projeto **não inclui um script de seed** para popular a base de dados automaticamente.  
+Por isso, é necessário criar os registros iniciais manualmente via API antes de utilizar os demais endpoints.
+
+### Passos obrigatórios:
+1. **Criar um cliente** via endpoint:
+   ```
+   POST http://{{url}}/clients
+   ```
+   Exemplo de payload:
+   ```json
+   {
+     "name": "Usuário Teste",
+     "email": "teste@exemplo.com"
+   }
+   ```
+
+2. O endpoint retornará o objeto do cliente criado, incluindo seu **`id`**.
+
+3. **Atualizar a collection do Postman**:
+   - Defina o valor do `id` retornado no campo `clientId` da variável de ambiente da collection.
+   - Assim, os demais endpoints (`/clients/:clientId/favorites`) poderão ser executados corretamente.
+
+4. **Atualizar mocks (quando necessário)**:
+   - Em cenários onde a API de Produtos estiver indisponível, o fallback de favoritos usará o arquivo `src/mocks/mock-favorites.json`.
+   - Para manter a consistência, edite esse arquivo e substitua o valor de `clientId` pelo **id do usuário criado** no passo 1.
+
+Exemplo (`src/mocks/mock-favorites.json`):
+```json
+[
+  {
+    "clientId": "cmfoi3yg60001bslix5ujc8w1",
+    "productId": "1",
+    "createdAt": "2024-01-01T12:00:00Z"
+  },
+]
+```
 
 ---
 
@@ -125,7 +169,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJ1c2VybmFtZSI6ImFsYWluIn0
 
 ### Favoritos
 - `POST /clients/:clientId/favorites` — adiciona `{ productId }` (valida existência do produto)
-- `GET /clients/:clientId/favorites` — lista favoritos (enriquecidos com dados do produto)
+- `GET /clients/:clientId/favorites` — lista favoritos
 - `DELETE /clients/:clientId/favorites/:favoriteId` — remove favorito
 
 ---
