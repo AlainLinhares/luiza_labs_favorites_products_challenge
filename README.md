@@ -1,7 +1,7 @@
 # Luizalabs — Favorites Products Challenge
 
 API REST para gerenciar clientes e suas listas de produtos favoritos.  
-Implementado em **NestJS + TypeScript** com **Prisma (Postgres)**, proteção via **JWT**, testes unitários e de integração, suporte a mocks e consulta à API de produtos.
+Implementado em **NestJS + TypeScript** com **Prisma (Postgres)**, proteção via **JWT**, testes unitários, suporte a mocks e consulta à API de produtos.
 
 ---
 
@@ -27,7 +27,7 @@ Este repositório implementa:
 - **Lista de favoritos por cliente**, sem duplicidade do mesmo produto.
 - Validação de existência do produto antes de adicionar aos favoritos (consulta à API externa com fallback para mocks).
 - Autenticação/Autorização por **JWT**
-- Testes unitários e de integração.
+- Testes unitários.
 - Configuração para Docker + docker-compose.
 
 ---
