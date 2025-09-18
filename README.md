@@ -17,6 +17,7 @@ Implementado em **NestJS + TypeScript** com **Prisma (Postgres)**, proteção vi
 - [Arquivos de mock](#arquivos-de-mock)
 - [Testes](#testes)
 - [Estrutura do projeto](#estrutura-do-projeto)
+- [Documentação da API](#documentação-da-api)
 
 ---
 
@@ -142,7 +143,7 @@ Exemplo (`src/mocks/mock-favorites.json`):
     "clientId": "cmfoi3yg60001bslix5ujc8w1",
     "productId": "1",
     "createdAt": "2024-01-01T12:00:00Z"
-  },
+  }
 ]
 ```
 
@@ -201,11 +202,14 @@ npm run test:cov
 - `test/` — unit + integration
 - `collection/` — com a collection dos enpoints e também a collection para os environments que devem ser preenchidos. Para o caso dos environments usar como referência os valores deste [link](https://www.postman.com/martian-desert-931750/magalu-challenge/environment/8694952-aecd19ac-2079-4804-a97a-d2e6c7655f59)
 
+---
 
-# Documentação da API Rest
+## Documentação da API
 
-A documentação completa da API pode ser acessada no Postman pelo link abaixo:
+A documentação da API pode ser acessada de duas formas:
 
-[Documentação da API Rest — Postman](https://www.postman.com/martian-desert-931750/workspace/magalu-challenge/collection/8694952-907e3202-ce3b-44ce-bfff-27e88aefe1b2?action=share&creator=8694952&active-environment=8694952-aecd19ac-2079-4804-a97a-d2e6c7655f59)
+- **Swagger**: disponível localmente em [http://localhost:3000/api](http://localhost:3000/api)  
+- **Postman**: disponível pelo link abaixo  
+  [Documentação da API Rest — Postman](https://www.postman.com/martian-desert-931750/workspace/magalu-challenge/collection/8694952-907e3202-ce3b-44ce-bfff-27e88aefe1b2?action=share&creator=8694952&active-environment=8694952-aecd19ac-2079-4804-a97a-d2e6c7655f59)
 
 ---
